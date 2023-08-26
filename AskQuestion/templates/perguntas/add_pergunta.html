@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Criar nova pergunta {% endblock %}
+
+{% block style %}
+ <style>
+     .pergunta-style{
+     width:700px;
+     height:auto;
+     }
+ </style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container bg-light p-3 rounded mt-5 pergunta-style">
+    <h3 class="text-danger mb-4">Criar pergunta</h3>
+    <form action="" method="post" novalidate>
+
+        {% csrf_token %}
+        {{pergunta_form | crispy}}
+
+        <input type="submit" value="Perguntar" class="btn btn-danger"/>
+    </form>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,63 @@
+<style>
+  .fonte-tipo{
+  font-family: san-serif !important;
+  }
+</style>
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary ">
+  <div class="container navbar bg-danger p-2 rounded ">
+    <a class="navbar-brand bg-warning text-black fw-bold p-2 mx-4 rounded fonte-tipo" href="{% url 'perguntas' %}">AskQuestion</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          {% if request.user.is_authenticated %}
+
+         <li class="nav-item">
+          <a class="nav-link active text-white mx-2" aria-current="page" href="{% url 'perguntas' %}">Inicio</a>
+        </li>
+
+         <li class="nav-item">
+          <a class="nav-link disabled  mx-2 bg-light text-danger rounded-pill " aria-disabled="true">Bem Vindo {{request.user.username}} !</a>
+        </li>
+
+        <li class="nav-item mx-2">
+          <a class="nav-link  text-white" href="{% url 'add_pergunta' %}">Quero perguntar</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle  text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Perfil
+          </a>
+          <ul class="dropdown-menu bg-warning ">
+              <li><a class="dropdown-item " href="{% url 'password_change' %}">Alterar senha</a></li>
+              <li><a class="dropdown-item" href="{% url 'profile' %}">Meu Perfil</a></li>
+              <li><a class="dropdown-item" href="{% url 'list_info' %}">Perguntas e respostas</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active  text-white" aria-current="page" href="{% url 'logout' %}">Sair da conta</a>
+        </li>
+
+           <form class="d-flex mx-5" role="search">
+              <input class="form-control me-2" type="search" placeholder="Faça a busca" aria-label="Search" name="s">
+              <button class="btn btn-outline-warning" type="submit">Buscar</button>
+           </form>
+
+           {% else %}
+
+         <li class="nav-item">
+          <a class="nav-link active  text-white" aria-current="page" href="{% url 'login' %}">Entrar na conta</a>
+        </li>
+
+         <li class="nav-item">
+          <a class="nav-link active  text-white" aria-current="page" href="{% url 'register' %}">Quero me registrar</a>
+        </li>
+
+          {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>

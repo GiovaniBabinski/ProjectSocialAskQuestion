@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %} Ask Question | Feed {% endblock %}
+
+{% block style %}
+<style>
+.link-style{
+
+ text-decoration:none;
+}
+
+ .link-style:hover {
+ color:red;
+}
+</style>
+
+{% endblock %}
+
+
+
+{% block body%}
+  <div class="container mt-5 pt-2 bg-light">
+      <h2 class="text-danger ">Publicações</h2>
+
+      {% for pergunta in perguntas_list %}
+
+      <div class="card mt-3 shadow">
+          <div class="card-body">
+              <h5 class="card-title">  <a class="link-style" href="{% url 'pergunta_detalhes' pergunta.slug %}">{{pergunta.titulo}}</a>   </h5>
+              <p class="card-text">{{pergunta.descricao}}</p>
+
+              <div class="card-footer">
+                  <div class="row">
+                      <div class="col col-md-auto">
+                          Postado por: <strong>{{pergunta.autor.username}} </strong>
+                      </div>
+
+                      <div class="col col-md-auto">
+                          Comentários: <strong>{{pergunta.respostas.count}} </strong>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+      {% endfor %}
+
+      <div class="mt-4">
+      {% include 'pagination.html' with page=perguntas_list %}
+      </div>
+
+  </div>
+
+{% endblock %}
+

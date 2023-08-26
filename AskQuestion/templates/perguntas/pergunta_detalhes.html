@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title%} Detalhes da pergunta  {% endblock %}
+
+{% block body %}
+
+<div class="container mt-5 p-3 bg-light rounded">
+    <h1>{{pergunta.titulo}}</h1>
+    <p>{{pergunta.descricao}}</p>
+    <h6 class="mt-5">
+        Postado por: <i class="badge bg-warning rounded-pill">{{pergunta.autor}} </i>
+    </h6>
+
+    <p>Publicado às {{pergunta.publicado}}</p>
+
+    {% if request.user == pergunta.autor %}
+
+    <a class="btn btn-warning" href="{% url 'update_pergunta' pergunta.slug %}">Atualizar</a>
+    <a class="btn btn-danger" href="{% url 'delete_pergunta' pergunta.slug %}">Excluir</a>
+
+    {% endif %}
+
+    <hr/> <br/>
+</div>
+
+<div class="container bg-warning rounded p-1">
+    {% if lista_respostas.count != 0 %}
+    <div class="mt-5">
+    <p class="badge bg-danger rounded-pill p-2 ">  <b>Comentários</b>  </p>
+    </div>
+    {% endif %}
+
+    {% for resposta in lista_respostas %}
+
+    <div class="card  py-3 shadow mb-2 bg-light w-75 m-75">
+        <div class="card-body">
+            <p class="card-text">{{resposta.descricao}}</p>
+            <div class="row ">
+                <div class="col col-md-auto ">
+                    Respondido por: {{resposta.autor.username}}
+                </div>
+                <div class="col col-md-auto">
+                    às: {{resposta.publicado}}
+                </div>
+            </div>
+        </div>
+
+        {% if request.user == resposta.autor %}
+
+         <div class="mx-3">
+             <a class="btn btn-outline-success btn-sm mt-3 " href="{% url 'update_resposta' resposta.id %}">Atualizar</a>
+             <a class="btn btn-outline-danger btn-sm mt-3 mx-1 " href="{% url 'delete_resposta' resposta.id %}">Excluir</a>
+         </div>
+
+        {% endif %}
+    </div>
+
+    {% endfor %}
+</div>
+
+
+<div class="container">
+    <div class="card mt-4">
+        <form method="post" novalidate>
+            <h5 class="card-header">Add Resposta</h5>
+            <div class="card-body">
+                {% csrf_token %}
+                {{resposta_form | crispy}}
+                <input type="submit" value="Responder" class="btn btn-success"/>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
+

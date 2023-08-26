@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Listando Perguntas {% endblock %}
+
+
+{% block style %}
+<style>
+.link-style{
+ text-decoration:none;
+}
+
+ .link-style:hover {
+ color:red;
+}
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container mt-5">
+
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Perguntas Feitas</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Perguntas Respondidas</button>
+  </li>
+  </ul>
+
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <div class="card mt-4 py-3 shadow">
+      <h4 class="card-header">Você fez {{perguntas.count}} perguntas</h4>
+      <div class="card-body ">
+        {% for pergunta in perguntas %}
+
+        <h5 class="card-text mt-4"><a class="link-style" href="{% url 'pergunta_detalhes' pergunta.slug %}">{{pergunta.titulo}}</a></h5>
+        <a class="btn btn-outline-danger btn-sm  mt-3" href="{% url 'delete_pergunta' pergunta.slug %}">Excluir</a>
+        <a class="btn btn-outline-success btn-sm  mt-3" href="{% url 'update_pergunta' pergunta.slug %}">Atualizar</a>
+        <hr/>
+
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <div class="card mt-4 py-3 shadow">
+      <h4 class="card-header">Você respondeu {{respostas.count}} perguntas</h4>
+      <div class="card-body ">
+        {% for resposta in respostas %}
+        <h5 class="card-text mt-4"><a class="link-style">{{resposta.descricao}}</a></h5>
+
+        <a class="btn btn-outline-danger btn-sm  mt-3" href="">Excluir</a>
+        <a class="btn btn-outline-success btn-sm  mt-3" href="">Atualizar</a>
+        <hr/>
+
+        {% endfor %}
+      </div>
+     </div>
+   </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}
+
